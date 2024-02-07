@@ -9,6 +9,9 @@ public class Applicant {
 	private Date dob;
 	private String pob;
 	//private RadioButton gender;
+	private String fatherName;
+	private String motherName;
+	//private Address address;
 	
 	
 }
