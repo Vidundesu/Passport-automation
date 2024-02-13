@@ -26,7 +26,6 @@ public class Applicant {
 	}
 	public String getAddress() {
 		return address.toString();
-		
 	}
 	
 	public String getFirstName() {
