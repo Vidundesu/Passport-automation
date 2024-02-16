@@ -2,25 +2,27 @@ package MainPackage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DBConnection {
-	private Connection conn=null;
+	private Connection conn;
 	
 	public DBConnection() {
 		this.connectDB();
 	}
-	public boolean connectDB() {
+	public void connectDB() {
 		try {
 			conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/pasdatabase", "root","1234");
 			if(conn!=null) {
 				System.out.println("Db connected");
-				return true;
+				
 			}
-		}catch(Exception e) {
-			System.out.println("no connected");
-			return false;
+		}catch(SQLException e) {
+			System.out.println(e);
+//			System.out.println(e);
+			
 		}
-		return false;
+		
 	}
     public void closeConnection(){
         try{
