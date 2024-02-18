@@ -55,6 +55,32 @@ public class ApplicantDashboard extends JPanel {
 		applicantStatus.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
 		applicantStatus.setBounds(49, 214, 188, 30);
 		add(applicantStatus);
+		
+		JLabel lblNewLabel_2 = new JLabel("Your Appointment Date: ");
+		lblNewLabel_2.setFont(new Font("Poppins Medium", Font.PLAIN, 25));
+		lblNewLabel_2.setBounds(49, 314, 326, 91);
+		add(lblNewLabel_2);
+		
+		JLabel apDate = new JLabel("<<date>>");
+		apDate.setBounds(382, 314, 188, 91);
+		add(apDate);
+		
+		JButton appointmentDate = new JButton("");
+		ImageIcon iconDate = new ImageIcon("C:\\Users\\User\\OneDrive\\Documents\\GitHub\\Passport-automation\\resources\\appointment.png");
+		Image imgDate = iconDate.getImage().getScaledInstance(44, 45, Image.SCALE_SMOOTH);
+		ImageIcon iconD = new ImageIcon(imgDate);
+		appointmentDate.setIcon(iconD);
+		appointmentDate.setBounds(49, 416, 44, 45);
+		appointmentDate.setOpaque(false);
+		appointmentDate.setContentAreaFilled(false);
+		appointmentDate.setBorderPainted(false);
+		add(appointmentDate);
+		
+		JLabel lblNewLabel_3 = new JLabel("Schedule an new appointment date.");
+		lblNewLabel_3.setFont(new Font("Poppins Medium", Font.PLAIN, 10));
+		lblNewLabel_3.setBounds(49, 461, 219, 45);
+		add(lblNewLabel_3);
+
 
 	}
 }

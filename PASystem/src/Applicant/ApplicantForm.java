@@ -212,7 +212,8 @@ public class ApplicantForm extends JPanel {
 		    
 		    }
 		});
-
+		
+		
 		ImageIcon icon = new ImageIcon("C:\\Users\\User\\OneDrive\\Documents\\GitHub\\Passport-automation\\resources\\home.png");
 		Image img = icon.getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
 		icon = new ImageIcon(img);

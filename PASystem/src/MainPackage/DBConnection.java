@@ -6,21 +6,36 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	private Connection conn;
+	private String username;
+	private String password;
 	
 	public DBConnection() {
-		this.connectDB();
+		this.username="root";
+		this.password="1234";
 	}
-	public void connectDB() {
+	public Connection connectDB() {
 		try {
-			conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/pasdatabase", "root","1234");
+			conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/pasdatabase", username,password);
 			if(conn!=null) {
 				System.out.println("Db connected");
-				
 			}
+			return conn;
 		}catch(SQLException e) {
 			System.out.println(e);
-//			System.out.println(e);
-			
+			return conn;
+		}
+		
+	}
+	public Connection connectNicDB() {
+		try {
+			conn=(Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/NationalDB", username,password);
+			if(conn!=null) {
+				System.out.println("Db connected");
+			}
+			return conn;
+		}catch(SQLException e) {
+			System.out.println(e);
+			return conn;
 		}
 		
 	}
