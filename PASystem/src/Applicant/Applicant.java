@@ -140,33 +140,36 @@ public class Applicant {
 //	public boolean applicantLogin(String username, String pw) {
 //		
 //	}
-	public boolean applicantNicVerification() {
-		
-		try {
-			String sql = "SELECT NIC, lastName FROM NationalTable WHERE NIC=?";
-			PreparedStatement stmt = conn2.prepareStatement(sql);
-			stmt.setInt(1, NIC);
-			ResultSet result = stmt.executeQuery();
-			while(result.next()) {
-				int nicT = result.getInt("NIC");
-				String lastNameT = result.getString("lastName");
-				
-				if(nicT==NIC && lastNameT.equals(lastName)) {
-					applicantRegister();
-					System.out.println("verification good");
-					return true;
-				}else {
-					System.out.println("mismatch");
-					return false;
-				}
-			}
-			return false;
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.println(e);
-			return false;
-		}
+	public boolean applicantNicVerification(String NIC, String lastName) {
+	    try {
+	        String sql = "SELECT NIC, lastName FROM NationalTable WHERE NIC=?";
+	        PreparedStatement stmt = conn2.prepareStatement(sql);
+	        stmt.setString(1, NIC);
+	        ResultSet result = stmt.executeQuery();
+	        
+	        if (result.next()) {
+	            int nicT = result.getInt("NIC");
+	            String lastNameT = result.getString("lastName");
+	            
+	            if (nicT == Integer.parseInt(NIC) && lastNameT.equals(lastName)) {
+	                applicantRegister();
+	                System.out.println("Verification successful");
+	                return true;
+	            } else {
+	                System.out.println("Mismatch");
+	                return false;
+	            }
+	        } else {
+	            System.out.println("Applicant not found");
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println(e);
+	        return false;
+	    }
 	}
+
 	public boolean applicantVerification() {
 		try {
 			String sql = "SELECT NIC FROM Applicant WHERE NIC=?";

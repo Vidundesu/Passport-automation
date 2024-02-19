@@ -208,6 +208,7 @@ public class ApplicantForm extends JPanel {
 		home.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	ApplicantView frame = new ApplicantView();
+		    	frame.switchToPanel();
 		    }
 		});
 		

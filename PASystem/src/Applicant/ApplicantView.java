@@ -111,6 +111,13 @@ public class ApplicantView extends javax.swing.JFrame{
         frame.revalidate();
         frame.repaint();
     }
+    public void switchToPanel() {
+        getContentPane().removeAll(); // Remove all components from the content pane
+        getContentPane().add(ApplicantMain); // Add the new panel to the content pane
+        revalidate(); // Revalidate the content pane to reflect the changes
+        repaint(); // Repaint the content pane
+    }
+
 
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
