@@ -6,6 +6,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Stack;
+
 import javax.swing.*;
 
 
@@ -17,10 +19,12 @@ public class ApplicantView extends javax.swing.JFrame{
 	 private javax.swing.JButton Applicantlogin;
 	 private javax.swing.JLabel applicantRegister;
 	 private javax.swing.JLabel jLabel1;
-	
+	// protected Stack<JPanel> panelStack = new Stack<>();
+	 
 	public ApplicantView() {
-			
+		
 		ApplicantMain = new javax.swing.JPanel();
+		//ApplicantMain.setSize(super.getSize());
         CurrentPanel = ApplicantMain;
         
         jLabel1 = new javax.swing.JLabel();

@@ -208,13 +208,11 @@ public class ApplicantForm extends JPanel {
 		home.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	ApplicantView frame = new ApplicantView();
-		       homeButton(ApplicantForm.this, frame);
-		    
 		    }
 		});
 		
 		
-		ImageIcon icon = new ImageIcon("C:\\Users\\User\\OneDrive\\Documents\\GitHub\\Passport-automation\\resources\\home.png");
+		ImageIcon icon = new ImageIcon("C:\\Users\\Vidun Nethdina\\Documents\\GitHub\\Passport-automation\\resources\\home.png");
 		Image img = icon.getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
 		icon = new ImageIcon(img);
 		home.setIcon(icon);
@@ -243,12 +241,9 @@ public class ApplicantForm extends JPanel {
             }
         });
     }
-	private void homeButton(ApplicantForm form, ApplicantView frame) {
+//	private void homeButton(ApplicantForm form, ApplicantView frame) {
+//	
+//		
+//	}
 		
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(frame.ApplicantMain);
-		frame.CurrentPanel = frame.ApplicantMain;
-		frame.revalidate();
-        frame.repaint();
-	}
 }
