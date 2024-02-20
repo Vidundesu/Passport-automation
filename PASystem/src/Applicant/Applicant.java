@@ -137,22 +137,20 @@ public class Applicant {
 		this.mobileNumber = mobileNumber;
 	}
 	
-//	public boolean applicantLogin(String username, String pw) {
-//		
-//	}
-	public boolean applicantNicVerification(String NIC, String lastName) {
+
+	public boolean applicantNicVerification() {
 	    try {
 	        String sql = "SELECT NIC, lastName FROM NationalTable WHERE NIC=?";
 	        PreparedStatement stmt = conn2.prepareStatement(sql);
-	        stmt.setString(1, NIC);
+	        stmt.setInt(1, NIC);
 	        ResultSet result = stmt.executeQuery();
 	        
 	        if (result.next()) {
 	            int nicT = result.getInt("NIC");
 	            String lastNameT = result.getString("lastName");
 	            
-	            if (nicT == Integer.parseInt(NIC) && lastNameT.equals(lastName)) {
-	                applicantRegister();
+	            if (nicT == NIC && lastNameT.equals(lastName)) {
+	            	applicantVerification();
 	                System.out.println("Verification successful");
 	                return true;
 	            } else {
@@ -182,7 +180,7 @@ public class Applicant {
 				stmt.close();
 				conn.close();
 			}else {
-				applicantNicVerification();
+				applicantRegister();
 			}
 			return true;
 		}catch(Exception e) {

@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
@@ -42,15 +43,18 @@ public class ApplicantForm extends JPanel {
 	private JTextField mobileNumber;
 	private JButton homeBtn;
 	private JButton home;
-	
+	ApplicantView frame;
 	/**
 	 * Create the panel.
 	 */
 	public ApplicantForm() {
+		frame = new ApplicantView();
+		
 		setLayout(null);
+		 setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
 		JLabel lblNewLabel = new JLabel("Applicant Registration");
-		lblNewLabel.setBounds(40, 31, 367, 90);
+		lblNewLabel.setBounds(40, 41, 367, 90);
 		lblNewLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 30));
 		add(lblNewLabel);
 		
@@ -195,8 +199,8 @@ public class ApplicantForm extends JPanel {
 		email.setColumns(10);
 		
 		lblNewLabel_9 = new JLabel("Mobile Number");
-		lblNewLabel_9.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
 		lblNewLabel_9.setBounds(40, 580, 125, 14);
+		lblNewLabel_9.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
 		add(lblNewLabel_9);
 		
 		mobileNumber = new JTextField();
@@ -205,10 +209,10 @@ public class ApplicantForm extends JPanel {
 		mobileNumber.setColumns(10);
 		
 		JButton home = new JButton("");
+		home.setBounds(40, 11, 52, 49);
 		home.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	ApplicantView frame = new ApplicantView();
-		    	frame.switchToPanel();
+		    	
 		    }
 		});
 		
@@ -217,12 +221,22 @@ public class ApplicantForm extends JPanel {
 		Image img = icon.getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
 		icon = new ImageIcon(img);
 		home.setIcon(icon);
-		home.setBounds(875, 11, 52, 49);
 		home.setOpaque(false);
 		home.setContentAreaFilled(false);
 		home.setBorderPainted(false);
 		home.setBorder(null);
 		add(home);
+		
+		JButton nextBtn = new JButton("Next");
+		nextBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicantForm2 form2 = new ApplicantForm2();
+				frame.switchPanel(form2);
+			}
+		});
+		nextBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		nextBtn.setBounds(40, 666, 89, 23);
+		add(nextBtn);
 	}
 	private void addPlaceholderBehavior(JTextField textField, String placeholder) {
         textField.addFocusListener(new FocusListener() {
@@ -242,9 +256,4 @@ public class ApplicantForm extends JPanel {
             }
         });
     }
-//	private void homeButton(ApplicantForm form, ApplicantView frame) {
-//	
-//		
-//	}
-		
 }
