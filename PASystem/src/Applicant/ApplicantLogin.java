@@ -16,10 +16,10 @@ import javax.swing.JFrame;
 
 public class ApplicantLogin extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JTextField ApUsername;
-	private JTextField ApPw;
-	private ApplicantView frame;
+	protected static final long serialVersionUID = 1L;
+	protected JTextField ApUsername;
+	protected JTextField ApPw;
+	protected ApplicantView frame;
 	/**
 	 * Create the panel.
 	 */
@@ -55,7 +55,7 @@ public class ApplicantLogin extends JPanel {
 		
 		ApRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApplicantForm form = new ApplicantForm();
+				ApplicantForm form = new ApplicantForm(frame);
 				frame.switchPanel(form);
 			}
 		});

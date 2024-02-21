@@ -21,34 +21,34 @@ import java.awt.event.ActionEvent;
 
 public class ApplicantForm extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JTextField fName;
-	private JTextField mName;
-	private JTextField lName;
-	private JTextField txtFathersFullName;
-	private JTextField textField;
-	private JTextField HouseNo;
-	private JTextField Road;
-	private JTextField city;
-	private JTextField day;
-	private JTextField month;
-	private JTextField year;
-	private JLabel lblNewLabel_6;
-	private JTextField pob;
-	private JLabel lblNewLabel_7;
-	private JTextField bNumber;
-	private JLabel lblNewLabel_8;
-	private JTextField email;
-	private JLabel lblNewLabel_9;
-	private JTextField mobileNumber;
-	private JButton homeBtn;
-	private JButton home;
-	ApplicantView frame;
+	protected static final long serialVersionUID = 1L;
+	protected JTextField fName;
+	protected JTextField mName;
+	protected JTextField lName;
+	protected JTextField txtFathersFullName;
+	protected JTextField textField;
+	protected JTextField HouseNo;
+	protected JTextField Road;
+	protected JTextField city;
+	protected JTextField day;
+	protected JTextField month;
+	protected JTextField year;
+	protected JLabel lblNewLabel_6;
+	protected JTextField pob;
+	protected JLabel lblNewLabel_7;
+	protected JTextField bNumber;
+	protected JLabel lblNewLabel_8;
+	protected JTextField email;
+	protected JLabel lblNewLabel_9;
+	protected JTextField mobileNumber;
+	protected JButton homeBtn;
+	protected JButton home;
+	protected ApplicantView frame;
 	/**
 	 * Create the panel.
 	 */
-	public ApplicantForm() {
-		frame = new ApplicantView();
+	public ApplicantForm(ApplicantView frame) {
+		this.frame = frame;
 		
 		setLayout(null);
 		 setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -230,8 +230,8 @@ public class ApplicantForm extends JPanel {
 		JButton nextBtn = new JButton("Next");
 		nextBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApplicantForm2 form2 = new ApplicantForm2();
-				frame.switchPanel(form2);
+				ApplicantForm2 form = new ApplicantForm2();
+				frame.switchPanel(form);
 			}
 		});
 		nextBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 11));

@@ -9,10 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 public class ApplicantView extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JPanel currentPanel;
-	private JPanel newPanel;
+	protected static final long serialVersionUID = 1L;
+	protected JPanel currentPanel;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -35,17 +34,26 @@ public class ApplicantView extends JFrame {
 	public ApplicantView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane = new ApplicantLogin(this);
-		setContentPane(contentPane);
+		currentPanel = new JPanel();
+		currentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		currentPanel = new ApplicantLogin(this);
+		
+		setContentPane(currentPanel);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
-	public void switchPanel( JPanel newPanel) {
-		contentPane.removeAll();
-		contentPane= newPanel;
-		setContentPane(contentPane);
+	public void switchToLogin(JPanel newPanel) {
+		currentPanel.removeAll();
+		currentPanel = new ApplicantLogin(this);
+		setContentPane(currentPanel);
 		revalidate();
 		repaint();
 	}
+	public void switchPanel( JPanel newPanel) {
+		currentPanel.removeAll();
+		currentPanel= newPanel;
+		setContentPane(currentPanel);
+		revalidate();
+		repaint();
+	}
+
 }

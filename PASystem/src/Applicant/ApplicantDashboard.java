@@ -20,10 +20,6 @@ public class ApplicantDashboard extends JPanel {
 	public ApplicantDashboard() {
 		setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(502, 5, 10, 10);
-		add(panel);
-		
 		JButton messageBtn = new JButton("");
 		ImageIcon icon = new ImageIcon("C:\\Users\\User\\OneDrive\\Documents\\GitHub\\Passport-automation\\resources\\messenger.png");
 		Image img = icon.getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);

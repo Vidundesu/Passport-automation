@@ -4,15 +4,17 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class ApplicantForm2 extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private JTextField username;
-	private JTextField password;
-	private JTextField confirmPw;
+	protected static final long serialVersionUID = 1L;
+	protected JTextField username;
+	protected JTextField password;
+	protected JTextField confirmPw;
 	
 	/**
 	 * Create the panel.
@@ -20,7 +22,7 @@ public class ApplicantForm2 extends JPanel {
 	public ApplicantForm2() {
 		
 		setLayout(null);
-		
+		 setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		JLabel lblNewLabel = new JLabel("Now create an Username and a Password to continue");
 		lblNewLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 19));
 		lblNewLabel.setBounds(283, 88, 596, 55);
