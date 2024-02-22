@@ -43,12 +43,13 @@ public class Admin {
 			if(result.next()) {
 				String hashedPasswordDB = result.getString("password");
 				String usernameDB = result.getString("username");
-				Encryptor encryptor = new Encryptor(password);
-				if(usernameDB.equals(username) && encryptor.passwordVerification(hashedPasswordDB)) {
-					return true;
-				}else {
-					return false;
-				}
+				Encryptor encrypt = new Encryptor();
+				if (encrypt.passwordVerification(password, hashedPasswordDB)) {
+                    System.out.println("User logged: " + username);
+                    return true;
+                } else {
+                    return false;
+                }
 			}else
 			return false;
 		}catch(Exception e) {

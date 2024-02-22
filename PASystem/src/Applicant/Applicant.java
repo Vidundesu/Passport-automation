@@ -7,6 +7,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JOptionPane;
@@ -25,14 +28,32 @@ public class Applicant {
 	private String email;
 	private String mobileNumber;
 	private int NIC;
+	private String username, status;
+	private LocalDate appointmentDate;
 	
 	DBConnection db = new DBConnection();
 	private Connection conn = db.connectDB();
 	Connection conn2 = db.connectNicDB();
 	public Applicant() {
-		conn = db.connectDB();
-		conn = db.connectNicDB();
+		
 	}
+	public Applicant(String username, String status, LocalDate appointmentDate) {
+		this.username=username;
+		this.status=status;
+		this.appointmentDate=appointmentDate;
+	}
+	public String getUserName() {
+        return username;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+    
 	public Applicant(String firstName, String middleName, String lastName, String fatherName, String motherName,
 					String no,String road, String city, int date, int month, int year, String pob, int birthNumber,String email, 
 					String mobileNumber, int NIC) {
@@ -228,10 +249,10 @@ public class Applicant {
 	}
 	public boolean applicantLoginCredentials(String username, String password, String passkey) {
 		try {
-			Encryptor encrypt = new Encryptor(password);
+			Encryptor encrypt = new Encryptor();
 			String sql = "INSERT INTO ApplicantLogin VALUES (?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			String hashedPassword = encrypt.encryptString();
+			String hashedPassword = encrypt.encryptString(password);
 			stmt.setString(1, username);
 			stmt.setString(2, hashedPassword);
 			stmt.setString(3, passkey);
@@ -254,19 +275,49 @@ public class Applicant {
 	}
 	public boolean applicantLogin(String username, String password) {
 		try {
-			Encryptor encrypt = new Encryptor(password);
-			String sql = "SELECT password FROM ApplicantLogin WHERE username = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			ResultSet result = stmt.executeQuery();
 			
+			String sql = "SELECT username, password FROM ApplicantLogin WHERE username = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet result = stmt.executeQuery();
 			if(result.next()) {
+				Encryptor encrypt = new Encryptor();
+				String usernameDB = result.getString("username");
+				String passwordDB = result.getString("password");
 				
+				if (encrypt.passwordVerification(password, passwordDB)) {
+                    System.out.println("User logged: " + username);
+                    return true;
+                } else {
+                    return false;
+                }
+			}else {
+				return false;
 			}
 		}catch(Exception e) {
-			
+			System.out.println(e);
+			return false;
 		}
 	}
-	
+	public List<Applicant> retrieveApplicantData(String username) {
+		List<Applicant> applicants = new ArrayList<>();
+		try {
+			String sql = "SELECT firstName, passportStatus, appointmentDate FROM applicant ap JOIN applicantLogin al ON ap.NIC = al.userID JOIN applicantStatus ast ON ap.NIC = ast.userID JOIN applicantAppointment apa ON ap.NIC = apa.userID WHERE username = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			ResultSet result = stmt.executeQuery();
+			
+			while(result.next()) {
+				String userName = result.getString("firstName");
+				String status = result.getString("passportStatus");
+				LocalDate appointmentDate = result.getDate("appointmentDate").toLocalDate();
+				applicants.add(new Applicant(userName, status, appointmentDate));
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return applicants;
+	}
 	
 	
 }

@@ -39,5 +39,12 @@ public class AdminView extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setContentPane(currentPanel);
 	}
+	public void switchPanel(JPanel newPanel) {
+		currentPanel.removeAll();
+		currentPanel= newPanel;
+		setContentPane(currentPanel);
+		revalidate();
+		repaint();
+	}
 
 }

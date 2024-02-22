@@ -2,6 +2,7 @@ package Applicant;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -75,7 +76,12 @@ public class ApplicantLogin extends JPanel {
 				String username = ApUsername.getText();
 				String pw = ApPw.getText();
 				Applicant applicant = new Applicant();
-				
+				if(applicant.applicantLogin(username, pw)) {
+					ApplicantDashboard apDash = new ApplicantDashboard(username);
+					frame.switchPanel(apDash);
+				}else {
+					JOptionPane.showMessageDialog(null, "Your credentials are wrong, Try again");
+				}
 			}
 		});
 		ApLogin.setBounds(580, 473, 209, 23);

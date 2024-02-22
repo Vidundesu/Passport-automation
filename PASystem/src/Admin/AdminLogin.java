@@ -68,7 +68,10 @@ public class AdminLogin extends JPanel {
 				
 				Admin admin = new Admin();
 				if(admin.adminLogin(username, password)) {
-					
+					AdminDashboard adminDash = new AdminDashboard(frame);
+					frame.switchPanel(adminDash);
+				}else {
+					JOptionPane.showMessageDialog(null, "Your administor credentials are wrong, Try again");
 				}
 				
 			}

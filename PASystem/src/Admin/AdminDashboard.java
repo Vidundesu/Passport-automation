@@ -6,18 +6,18 @@ import java.awt.Font;
 
 public class AdminDashboard extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	protected static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
 	 */
-	public AdminDashboard() {
+	protected AdminView frame;
+	public AdminDashboard(AdminView frame) {
 		setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome Admin");
-		lblNewLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
 		lblNewLabel.setBounds(20, 11, 199, 51);
+		lblNewLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
 		add(lblNewLabel);
-
 	}
 }
