@@ -10,7 +10,7 @@ public class Encryptor {
 	
 	public Encryptor(String password) throws NoSuchAlgorithmException {
 		this.password=password;
-		encryptString();
+		
 	}
 	public String encryptString() throws NoSuchAlgorithmException{
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -23,7 +23,7 @@ public class Encryptor {
 		
 		try {
 			if(encryptString().equals(hashedPassword)) {
-				System.out.println(hashedPassword);
+				System.out.println("ok");
 				return true;
 			}else {
 				System.out.println("no");

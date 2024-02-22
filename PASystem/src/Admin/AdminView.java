@@ -8,8 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 public class AdminView extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	protected static final long serialVersionUID = 1L;
+	protected JPanel currentPanel;
 
 	/**
 	 * Launch the application.
@@ -32,11 +32,12 @@ public class AdminView extends JFrame {
 	 */
 	public AdminView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
+		setBounds(100, 100, 562, 359);
+		currentPanel = new JPanel();
+		currentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		currentPanel = new AdminLogin(this);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setContentPane(currentPanel);
 	}
 
 }

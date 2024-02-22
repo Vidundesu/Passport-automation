@@ -25,8 +25,8 @@ public class ApplicantForm extends JPanel {
 	protected JTextField fName;
 	protected JTextField mName;
 	protected JTextField lName;
-	protected JTextField txtFathersFullName;
-	protected JTextField textField;
+	protected JTextField fatherName;
+	protected JTextField motherName;
 	protected JTextField HouseNo;
 	protected JTextField Road;
 	protected JTextField city;
@@ -44,6 +44,8 @@ public class ApplicantForm extends JPanel {
 	protected JButton homeBtn;
 	protected JButton home;
 	protected ApplicantView frame;
+	private JLabel lblNewLabel_10;
+	private JTextField Nic;
 	/**
 	 * Create the panel.
 	 */
@@ -94,21 +96,21 @@ public class ApplicantForm extends JPanel {
 		lblNewLabel_2.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
 		add(lblNewLabel_2);
 		
-		txtFathersFullName = new JTextField();
-		txtFathersFullName.setBounds(40, 213, 182, 20);
-		txtFathersFullName.setHorizontalAlignment(SwingConstants.LEFT);
-		add(txtFathersFullName);
-		txtFathersFullName.setColumns(10);
+		fatherName = new JTextField();
+		fatherName.setBounds(40, 213, 182, 20);
+		fatherName.setHorizontalAlignment(SwingConstants.LEFT);
+		add(fatherName);
+		fatherName.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Mother's Name");
 		lblNewLabel_3.setBounds(40, 244, 183, 14);
 		lblNewLabel_3.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
 		add(lblNewLabel_3);
 		
-		textField = new JTextField();
-		textField.setBounds(40, 269, 182, 20);
-		add(textField);
-		textField.setColumns(10);
+		motherName = new JTextField();
+		motherName.setBounds(40, 269, 182, 20);
+		add(motherName);
+		motherName.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Address");
 		lblNewLabel_4.setBounds(40, 300, 125, 14);
@@ -230,13 +232,45 @@ public class ApplicantForm extends JPanel {
 		JButton nextBtn = new JButton("Next");
 		nextBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApplicantForm2 form = new ApplicantForm2();
+				
+				
+				String firstName =fName.getText();
+				String middleName = mName.getText();
+				String lastName = lName.getText();
+				String dadName = fatherName.getText();
+				String momName = motherName.getText();
+				String hNo = HouseNo.getText();
+				String road = Road.getText();
+				String cty = city.getText();
+				int date = Integer.parseInt(day.getText());
+				int mnth = Integer.parseInt(month.getText());
+				int yr = Integer.parseInt(year.getText());
+				String placeBirth = pob.getText();
+				int birthNumber = Integer.parseInt(bNumber.getText());
+				String mail = email.getText();
+				String mobile = mobileNumber.getText();
+				int id = Integer.parseInt(Nic.getText());
+				Applicant applicant = new Applicant(firstName, middleName, lastName, dadName, momName, hNo, road, 
+						cty, date, mnth, yr, placeBirth, birthNumber, mail, mobile, id);
+				ApplicantForm2 form = new ApplicantForm2(applicant);
 				frame.switchPanel(form);
+				applicant.applicantNicVerification();
+				
 			}
 		});
 		nextBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
 		nextBtn.setBounds(40, 666, 89, 23);
 		add(nextBtn);
+		
+		lblNewLabel_10 = new JLabel("NIC number");
+		lblNewLabel_10.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
+		lblNewLabel_10.setBounds(363, 133, 162, 14);
+		add(lblNewLabel_10);
+		
+		Nic = new JTextField();
+		Nic.setBounds(363, 157, 148, 20);
+		add(Nic);
+		Nic.setColumns(10);
 	}
 	private void addPlaceholderBehavior(JTextField textField, String placeholder) {
         textField.addFocusListener(new FocusListener() {
@@ -256,4 +290,5 @@ public class ApplicantForm extends JPanel {
             }
         });
     }
+	
 }

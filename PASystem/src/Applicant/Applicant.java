@@ -1,5 +1,6 @@
 package Applicant;
 import MainPackage.DBConnection;
+import MainPackage.Encryptor;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -24,11 +25,13 @@ public class Applicant {
 	private String email;
 	private String mobileNumber;
 	private int NIC;
+	
 	DBConnection db = new DBConnection();
 	private Connection conn = db.connectDB();
 	Connection conn2 = db.connectNicDB();
 	public Applicant(String firstName, String middleName, String lastName, String fatherName, String motherName,
-					String no,String road, String city, int date, int month, int year, String pob, int birthNumber,String email, String mobileNumber, int NIC) {
+					String no,String road, String city, int date, int month, int year, String pob, int birthNumber,String email, 
+					String mobileNumber, int NIC) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -41,6 +44,7 @@ public class Applicant {
 		this.email=email;
 		this.mobileNumber = mobileNumber;
 		this.NIC=NIC;
+		
 	}
 	
 	public int getNIC() {
@@ -142,7 +146,7 @@ public class Applicant {
 	    try {
 	        String sql = "SELECT NIC, lastName FROM NationalTable WHERE NIC=?";
 	        PreparedStatement stmt = conn2.prepareStatement(sql);
-	        stmt.setInt(1, NIC);
+	        stmt.setLong(1, NIC);
 	        ResultSet result = stmt.executeQuery();
 	        
 	        if (result.next()) {
@@ -172,7 +176,7 @@ public class Applicant {
 		try {
 			String sql = "SELECT NIC FROM Applicant WHERE NIC=?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, NIC);
+			stmt.setLong(1, NIC);
 			ResultSet result = stmt.executeQuery();
 			
 			if(result.next()) {
@@ -205,7 +209,7 @@ public class Applicant {
 			stmt.setString(9,getAddress());
 			stmt.setString(10, fatherName);
 			stmt.setString(11, motherName);
-			stmt.setInt(12, NIC);
+			stmt.setLong(12, NIC);
 			int rowsInserted = stmt.executeUpdate();
 			if(rowsInserted>0) {
 				System.out.println("success");
@@ -218,7 +222,30 @@ public class Applicant {
 			return false;
 		}
 	}
-	
+	public boolean applicantLoginCredentials(String username, String password, String passkey) {
+		try {
+			Encryptor encrypt = new Encryptor(password);
+			String sql = "INSERT INTO ApplicantLogin VALUES (?,?,?,?)";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			String hashedPassword = encrypt.encryptString();
+			stmt.setString(1, username);
+			stmt.setString(2, hashedPassword);
+			stmt.setString(3, passkey);
+			stmt.setLong(4, NIC);
+			
+			int rowsInserted = stmt.executeUpdate();
+			if(rowsInserted>0) {
+				System.out.println("ok pass");
+				return true;
+			}else {
+				return false;
+			}
+					
+		}catch(Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 	
 	
 	

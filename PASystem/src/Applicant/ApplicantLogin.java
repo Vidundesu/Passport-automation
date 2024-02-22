@@ -64,7 +64,7 @@ public class ApplicantLogin extends JPanel {
 		JButton ApLogin = new JButton("Login");
 		ApLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//frame.switchToApplicantForm2();
+				
 			}
 		});
 		ApLogin.setBounds(580, 473, 209, 23);
