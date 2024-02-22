@@ -35,15 +35,16 @@ public class Admin {
 	public boolean adminLogin(String username, String password) {
 		try {
 			
-			String sql = "SELECT password FROM AdminLogin WHERE username = ?";
+			String sql = "SELECT username, password FROM AdminLogin WHERE username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet result = stmt.executeQuery();
 			
 			if(result.next()) {
-				String hashedPassword = result.getString("password");
+				String hashedPasswordDB = result.getString("password");
+				String usernameDB = result.getString("username");
 				Encryptor encryptor = new Encryptor(password);
-				if(encryptor.passwordVerification(hashedPassword)) {
+				if(usernameDB.equals(username) && encryptor.passwordVerification(hashedPasswordDB)) {
 					return true;
 				}else {
 					return false;

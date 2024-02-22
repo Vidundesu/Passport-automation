@@ -41,7 +41,7 @@ public class ApplicantView extends JFrame {
 		setContentPane(currentPanel);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
-	public void switchToLogin(JPanel newPanel) {
+	public void switchToLogin() {
 		currentPanel.removeAll();
 		currentPanel = new ApplicantLogin(this);
 		setContentPane(currentPanel);

@@ -20,13 +20,13 @@ public class ApplicantForm2 extends JPanel {
 	protected JTextField usernameAp;
 	protected JTextField passwordAp;
 	protected JTextField confirmPwAp;
-	private JTextField passkeyAp;
-	
+	protected JTextField passkeyAp;
+	protected ApplicantView frame;
 	/**
 	 * Create the panel.
 	 */
-	public ApplicantForm2(Applicant applicantN) {
-		
+	public ApplicantForm2(Applicant applicantN, ApplicantView frame) {
+		this.frame = frame;
 		setLayout(null);
 		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		JLabel lblNewLabel = new JLabel("Now create an Username and a Password to continue");
@@ -74,7 +74,13 @@ public class ApplicantForm2 extends JPanel {
 				if(password.equals(null)) {
 					JOptionPane.showMessageDialog(null, "Check whether your passwords confirmation is correct?");
 				}
-				applicantN.applicantLoginCredentials(username, password, passkey);
+				if(applicantN.applicantLoginCredentials(username, password, passkey)) {
+					int option = JOptionPane.showConfirmDialog(null, "You are successfully registered in the System \n Press OK to return to Login", "Success", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+			        if (option == JOptionPane.OK_OPTION) {
+			        	frame.switchToLogin();
+			        }
+				}
+				
 			}
 		});
 		registerBtn.setBounds(283, 504, 115, 33);

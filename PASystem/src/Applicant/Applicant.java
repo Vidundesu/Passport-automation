@@ -29,6 +29,10 @@ public class Applicant {
 	DBConnection db = new DBConnection();
 	private Connection conn = db.connectDB();
 	Connection conn2 = db.connectNicDB();
+	public Applicant() {
+		conn = db.connectDB();
+		conn = db.connectNicDB();
+	}
 	public Applicant(String firstName, String middleName, String lastName, String fatherName, String motherName,
 					String no,String road, String city, int date, int month, int year, String pob, int birthNumber,String email, 
 					String mobileNumber, int NIC) {
@@ -236,6 +240,8 @@ public class Applicant {
 			int rowsInserted = stmt.executeUpdate();
 			if(rowsInserted>0) {
 				System.out.println("ok pass");
+				conn.close();
+				conn2.close();
 				return true;
 			}else {
 				return false;
@@ -244,6 +250,20 @@ public class Applicant {
 		}catch(Exception e) {
 			System.out.println(e);
 			return false;
+		}
+	}
+	public boolean applicantLogin(String username, String password) {
+		try {
+			Encryptor encrypt = new Encryptor(password);
+			String sql = "SELECT password FROM ApplicantLogin WHERE username = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next()) {
+				
+			}
+		}catch(Exception e) {
+			
 		}
 	}
 	

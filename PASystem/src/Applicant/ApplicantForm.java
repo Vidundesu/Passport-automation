@@ -214,7 +214,7 @@ public class ApplicantForm extends JPanel {
 		home.setBounds(40, 11, 52, 49);
 		home.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		    	
+		    	frame.switchToLogin();
 		    }
 		});
 		
@@ -252,7 +252,7 @@ public class ApplicantForm extends JPanel {
 				int id = Integer.parseInt(Nic.getText());
 				Applicant applicant = new Applicant(firstName, middleName, lastName, dadName, momName, hNo, road, 
 						cty, date, mnth, yr, placeBirth, birthNumber, mail, mobile, id);
-				ApplicantForm2 form = new ApplicantForm2(applicant);
+				ApplicantForm2 form = new ApplicantForm2(applicant, frame);
 				frame.switchPanel(form);
 				applicant.applicantNicVerification();
 				
@@ -271,6 +271,7 @@ public class ApplicantForm extends JPanel {
 		Nic.setBounds(363, 157, 148, 20);
 		add(Nic);
 		Nic.setColumns(10);
+		
 	}
 	private void addPlaceholderBehavior(JTextField textField, String placeholder) {
         textField.addFocusListener(new FocusListener() {
@@ -290,5 +291,4 @@ public class ApplicantForm extends JPanel {
             }
         });
     }
-	
 }

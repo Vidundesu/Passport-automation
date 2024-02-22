@@ -7,10 +7,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import MainPackage.Encryptor;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -39,6 +45,7 @@ public class ApplicantLogin extends JPanel {
 		ApUsername.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
 		add(ApUsername);
 		ApUsername.setColumns(10);
+		addPlaceholderBehavior(ApUsername, ApUsername.getText());
 		
 		ApPw = new JTextField();
 		ApPw.setBounds(580, 402, 209, 30);
@@ -47,6 +54,7 @@ public class ApplicantLogin extends JPanel {
 		ApPw.setHorizontalAlignment(SwingConstants.CENTER);
 		add(ApPw);
 		ApPw.setColumns(10);
+		addPlaceholderBehavior(ApPw, ApPw.getText());
 		
 		JButton ApRegister = new JButton("Register");
 		ApRegister.setBounds(704, 443, 85, 14);
@@ -64,6 +72,9 @@ public class ApplicantLogin extends JPanel {
 		JButton ApLogin = new JButton("Login");
 		ApLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String username = ApUsername.getText();
+				String pw = ApPw.getText();
+				Applicant applicant = new Applicant();
 				
 			}
 		});
@@ -73,4 +84,22 @@ public class ApplicantLogin extends JPanel {
 		
 		setPreferredSize(new Dimension(1020,720));
 	}
+	private void addPlaceholderBehavior(JTextField textField, String placeholder) {
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+            	
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(placeholder);
+                }
+            }
+        });
+    }
 }
