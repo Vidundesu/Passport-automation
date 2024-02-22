@@ -302,7 +302,14 @@ public class Applicant {
 	public List<Applicant> retrieveApplicantData(String username) {
 		List<Applicant> applicants = new ArrayList<>();
 		try {
-			String sql = "SELECT firstName, passportStatus, appointmentDate FROM applicant ap JOIN applicantLogin al ON ap.NIC = al.userID JOIN applicantStatus ast ON ap.NIC = ast.userID JOIN applicantAppointment apa ON ap.NIC = apa.userID WHERE username = ?";
+			
+			String sql = "SELECT firstName, passportStatus, appointmentDate " +
+		             "FROM applicant ap " +
+		             "LEFT JOIN applicantLogin al ON ap.NIC = al.userID " +
+		             "LEFT JOIN applicantStatus ast ON ap.NIC = ast.userID " +
+		             "LEFT JOIN applicantAppointment apa ON ap.NIC = apa.userID " +
+		             "WHERE username = ?";
+
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet result = stmt.executeQuery();
@@ -318,6 +325,40 @@ public class Applicant {
 		}
 		return applicants;
 	}
-	
+	public boolean applicantAppointment(String username, LocalDate apDate) {
+	    int id;
+	    try {
+	       
+	        String getUserIdSQL = "SELECT userID FROM ApplicantLogin WHERE username = ?";
+	        PreparedStatement stmt = conn.prepareStatement(getUserIdSQL);
+	        stmt.setString(1, username);
+	        ResultSet result = stmt.executeQuery();
+	        if (result.next()) {
+	            id = result.getInt("userID");
+	        } else {
+	            System.out.println("Username not found");
+	            return false;
+	        }
+	        stmt.close();
+
+	        String insertAppointmentSQL = "INSERT INTO ApplicantAppointment VALUES (?, ?)";
+	        PreparedStatement insertApStmt = conn.prepareStatement(insertAppointmentSQL);
+	        insertApStmt.setDate(1, java.sql.Date.valueOf(apDate));
+	        insertApStmt.setInt(2, id);
+	        int rows = insertApStmt.executeUpdate();
+	        
+	        if (rows > 0) {
+	            System.out.println("Appointment scheduled");
+	            return true;
+	        } else {
+	            System.out.println("Failed to schedule appointment");
+	            return false;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 	
 }

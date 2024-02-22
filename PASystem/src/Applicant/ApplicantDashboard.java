@@ -5,6 +5,7 @@ import javax.swing.JButton;
 
 import java.awt.Image;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -23,8 +24,8 @@ public class ApplicantDashboard extends JPanel {
 	private String status;
 	private String name;
 	private LocalDate appointmentDate;
-	String date;
-	Applicant applicant;
+	private String date;
+	private Applicant applicant;
 	/**
 	 * Create the panel.
 	 */
@@ -92,6 +93,8 @@ public class ApplicantDashboard extends JPanel {
 		setPreferredSize(new Dimension(1020,720));
 		
 		JDateChooser dateChooser = new JDateChooser();
+		LocalDate today = LocalDate.now();
+		dateChooser.getJCalendar().setMinSelectableDate(java.sql.Date.valueOf(today));
 		dateChooser.getCalendarButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -99,6 +102,17 @@ public class ApplicantDashboard extends JPanel {
 		});
 		dateChooser.setBounds(49, 494, 188, 30);
 		add(dateChooser);
+		
+		JButton DateSchedule = new JButton("Schedule!");
+		DateSchedule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LocalDate selectedDate = dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				applicant.applicantAppointment(username, selectedDate);
+			}
+		});
+		DateSchedule.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		DateSchedule.setBounds(247, 494, 89, 30);
+		add(DateSchedule);
 	}
 	public void display() {
 		List<Applicant> applicants = applicant.retrieveApplicantData(username);
