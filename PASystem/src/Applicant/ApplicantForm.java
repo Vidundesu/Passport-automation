@@ -11,10 +11,14 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -44,8 +48,14 @@ public class ApplicantForm extends JPanel {
 	protected JButton homeBtn;
 	protected JButton home;
 	protected ApplicantView frame;
-	private JLabel lblNewLabel_10;
-	private JTextField Nic;
+	protected JLabel lblNewLabel_10;
+	protected JTextField Nic;
+	protected JButton addImage;
+	protected String fileName;
+	protected byte[] passportImg;
+	protected byte[] birthImg;
+	JLabel imageLabel;
+	JLabel birthLabel;
 	/**
 	 * Create the panel.
 	 */
@@ -56,7 +66,7 @@ public class ApplicantForm extends JPanel {
 		 setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		
 		JLabel lblNewLabel = new JLabel("Applicant Registration");
-		lblNewLabel.setBounds(40, 41, 367, 90);
+		lblNewLabel.setBounds(40, 72, 367, 46);
 		lblNewLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 30));
 		add(lblNewLabel);
 		
@@ -211,7 +221,7 @@ public class ApplicantForm extends JPanel {
 		mobileNumber.setColumns(10);
 		
 		JButton home = new JButton("");
-		home.setBounds(40, 11, 52, 49);
+		home.setBounds(40, 27, 20, 20);
 		home.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	frame.switchToLogin();
@@ -220,7 +230,7 @@ public class ApplicantForm extends JPanel {
 		
 		
 		ImageIcon icon = new ImageIcon("C:\\Users\\Vidun Nethdina\\Documents\\GitHub\\Passport-automation\\resources\\home.png");
-		Image img = icon.getImage().getScaledInstance(42, 40, Image.SCALE_SMOOTH);
+		Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		icon = new ImageIcon(img);
 		home.setIcon(icon);
 		home.setOpaque(false);
@@ -251,7 +261,7 @@ public class ApplicantForm extends JPanel {
 				String mobile = mobileNumber.getText();
 				int id = Integer.parseInt(Nic.getText());
 				Applicant applicant = new Applicant(firstName, middleName, lastName, dadName, momName, hNo, road, 
-						cty, date, mnth, yr, placeBirth, birthNumber, mail, mobile, id);
+						cty, date, mnth, yr, placeBirth, birthNumber, mail, mobile, id, passportImg, birthImg);
 				ApplicantForm2 form = new ApplicantForm2(applicant, frame);
 				frame.switchPanel(form);
 				applicant.applicantNicVerification();
@@ -272,6 +282,39 @@ public class ApplicantForm extends JPanel {
 		add(Nic);
 		Nic.setColumns(10);
 		
+		addImage = new JButton("Add passport image");
+		addImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				passportImg =browseFiles(passportImg);
+				imageLabel.setText(fileName);
+			}
+		});
+		addImage.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		addImage.setBounds(363, 212, 148, 23);
+		add(addImage);
+		
+		;
+		imageLabel = new JLabel();
+		imageLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		imageLabel.setBounds(363, 245, 500, 14);
+		add(imageLabel);
+		
+		JButton addBirth = new JButton("Add birth certificate");
+		addBirth.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				birthImg = browseFiles(birthImg);
+				birthLabel.setText(fileName);
+			}
+		});
+		addBirth.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		addBirth.setBounds(363, 268, 148, 23);
+		add(addBirth);
+		
+		birthLabel = new JLabel();
+		birthLabel.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
+		birthLabel.setBounds(363, 301, 500, 14);
+		add(birthLabel);
+		
 	}
 	private void addPlaceholderBehavior(JTextField textField, String placeholder) {
         textField.addFocusListener(new FocusListener() {
@@ -291,4 +334,28 @@ public class ApplicantForm extends JPanel {
             }
         });
     }
+	public byte[] browseFiles(byte[] image) {
+		JFileChooser chooser = new JFileChooser();
+		chooser.showOpenDialog(null);
+		File f = chooser.getSelectedFile();
+		fileName = f.getAbsolutePath();
+		try {
+			File doc = new File(fileName);
+			FileInputStream fis = new FileInputStream(doc);
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			
+			for(int i;(i=fis.read(buf))!=-1;) {
+				bos.write(buf);
+			}
+			image = bos.toByteArray();
+			System.out.println("image selected");
+			
+			return image;
+		}catch(Exception e) {
+			System.out.println("image upload fail");
+			return null;
+			
+		}
+	}
 }

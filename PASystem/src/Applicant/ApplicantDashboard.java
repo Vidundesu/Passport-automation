@@ -66,7 +66,14 @@ public class ApplicantDashboard extends JPanel {
 		add(lblNewLabel_1);
 		
 		JLabel applicantStatus = new JLabel(status);
-		applicantStatus.setForeground(new Color(0, 128, 0));
+		if(status.equals("rejected")) {
+			applicantStatus.setForeground(new Color(153, 0, 0));
+		}if(status.equals("pass")) {
+			applicantStatus.setForeground(new Color(0, 204, 0));
+		}if(status.equals("Processing")) {
+			applicantStatus.setForeground(new Color(0, 0, 51));
+		}
+		
 		applicantStatus.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
 		applicantStatus.setBounds(49, 214, 188, 30);
 		add(applicantStatus);

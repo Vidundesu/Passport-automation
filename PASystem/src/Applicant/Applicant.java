@@ -30,6 +30,8 @@ public class Applicant {
 	private int NIC;
 	private String username, status;
 	private LocalDate appointmentDate;
+	private byte[] passportImage;
+	private byte[] birthImage;
 	
 	DBConnection db = new DBConnection();
 	private Connection conn = db.connectDB();
@@ -56,7 +58,7 @@ public class Applicant {
     
 	public Applicant(String firstName, String middleName, String lastName, String fatherName, String motherName,
 					String no,String road, String city, int date, int month, int year, String pob, int birthNumber,String email, 
-					String mobileNumber, int NIC) {
+					String mobileNumber, int NIC, byte[] passportImg, byte[] birthImg) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -69,7 +71,21 @@ public class Applicant {
 		this.email=email;
 		this.mobileNumber = mobileNumber;
 		this.NIC=NIC;
-		
+		this.passportImage=passportImg;
+		this.birthImage=birthImg;
+	}
+	
+	public byte[] getPassportImage() {
+		return passportImage;
+	}
+	public void setPassportImage(byte[] passportImage) {
+		this.passportImage = passportImage;
+	}
+	public byte[] getBirthImage() {
+		return birthImage;
+	}
+	public void setBirthImage(byte[] birthImage) {
+		this.birthImage = birthImage;
 	}
 	
 	public int getNIC() {
@@ -220,7 +236,7 @@ public class Applicant {
 	public boolean applicantRegister() {
 	
 		try {
-			String sql = "INSERT INTO Applicant VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO Applicant VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
 			stmt.setString(1, firstName);
@@ -235,9 +251,17 @@ public class Applicant {
 			stmt.setString(10, fatherName);
 			stmt.setString(11, motherName);
 			stmt.setLong(12, NIC);
+			stmt.setBytes(13, passportImage);
+			stmt.setBytes(14, birthImage);
 			int rowsInserted = stmt.executeUpdate();
 			if(rowsInserted>0) {
+				String statusSql = "INSERT INTO ApplicantStatus Values (?,?)";
+				stmt.setString(1, "Processing");
+				stmt.setInt(2, NIC);
+				stmt.executeUpdate(statusSql);
+				
 				System.out.println("success");
+				
 			}else {
 				System.out.println("fail");
 			}

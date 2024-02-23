@@ -3,6 +3,12 @@ package Admin;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 import MainPackage.DBConnection;
 import MainPackage.Encryptor;
@@ -57,4 +63,31 @@ public class Admin {
 			 return false;
 		}
 	}
+	public void displayApplicants(JTable table) {
+		 DefaultTableModel model = (DefaultTableModel) table.getModel();
+		 model.setRowCount(0);
+		    try {
+		        String sql = "SELECT * FROM applicant"; 
+		        PreparedStatement stmt = conn.prepareStatement(sql);
+		        ResultSet rs = stmt.executeQuery();
+		        while(rs.next()) {
+		        	Object[] rowData = {
+		        			rs.getString("NIC"),
+		        			rs.getString("firstName"),
+		        			rs.getString("lastName"),
+		        			rs.getInt("birthNumber"),
+		        			rs.getString("email")
+		        	};
+		        	model.addRow(rowData);
+		        }
+		        rs.close();
+		        stmt.close();
+		        conn.close();
+		        
+		        table.setModel(model);
+		    } catch (SQLException ex) {
+		        ex.printStackTrace();
+		    }
+	}
 }
+ 
