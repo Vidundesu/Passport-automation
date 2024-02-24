@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
-
 import MainPackage.DBConnection;
 import MainPackage.Encryptor;
 
@@ -80,14 +81,54 @@ public class Admin {
 		        	};
 		        	model.addRow(rowData);
 		        }
-		        rs.close();
+		        table.setModel(model);
 		        stmt.close();
-		        conn.close();
-		        
+		    } catch (SQLException ex) {
+		        ex.printStackTrace();
+		    }
+	}
+	public void displayStatus(JTable table) {
+		 DefaultTableModel model = (DefaultTableModel) table.getModel();
+		 model.setRowCount(0);
+		    try {
+		        String sql = "SELECT firstName,lastName, userID, passportStatus FROM Applicant ap JOIN ApplicantStatus aps ON aps.userID = ap.NIC"; 
+		        PreparedStatement stmt = conn.prepareStatement(sql);
+		       
+		        ResultSet rs = stmt.executeQuery();
+		        while(rs.next()) {
+		        	Object[] rowData = {
+		        			rs.getInt("userID"),
+		        			rs.getString("firstName"),
+		        			rs.getString("lastName"),
+		        			rs.getString("passportStatus")
+		        	};
+		        	model.addRow(rowData);
+		        }
 		        table.setModel(model);
 		    } catch (SQLException ex) {
 		        ex.printStackTrace();
 		    }
 	}
+	public Map<String, byte[]> getDocs(int nic) {
+	    Map<String, byte[]> imageDataMap = new HashMap<>();
+	    try {
+	        String sql = "SELECT passportImage, birthImage FROM applicant WHERE NIC = ?";
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setInt(1, nic);
+	        ResultSet result = stmt.executeQuery();
+
+	        if (result.next()) {
+	            byte[] passportImage = result.getBytes("passportImage");
+	            byte[] birthImage = result.getBytes("birthImage");
+	            imageDataMap.put("passportImage", passportImage);
+	            imageDataMap.put("birthImage", birthImage);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return imageDataMap;
+	}
+
+
 }
  

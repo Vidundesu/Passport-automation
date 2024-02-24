@@ -254,18 +254,21 @@ public class Applicant {
 			stmt.setBytes(13, passportImage);
 			stmt.setBytes(14, birthImage);
 			int rowsInserted = stmt.executeUpdate();
-			if(rowsInserted>0) {
-				String statusSql = "INSERT INTO ApplicantStatus Values (?,?)";
-				stmt.setString(1, "Processing");
-				stmt.setInt(2, NIC);
-				stmt.executeUpdate(statusSql);
-				
-				System.out.println("success");
-				
-			}else {
-				System.out.println("fail");
-			}
-			return true;
+			if (rowsInserted > 0) {
+	            String statusSql = "INSERT INTO ApplicantStatus Values (?,?)";
+	            PreparedStatement statusStmt = conn.prepareStatement(statusSql); 
+	            statusStmt.setString(1, "Processing");
+	            statusStmt.setLong(2, NIC);
+	            int statusRowsInserted = statusStmt.executeUpdate(); // Execute the status SQL query
+	            if (statusRowsInserted > 0) {
+	                System.out.println("Success");
+	            } else {
+	                System.out.println("Failed to insert into ApplicantStatus table");
+	            }
+	        } else {
+	            System.out.println("Failed to insert into Applicant table");
+	        }
+	        return true;
 		}catch(SQLException e) {
 			System.out.println(e);
 			return false;

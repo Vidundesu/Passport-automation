@@ -262,9 +262,9 @@ public class ApplicantForm extends JPanel {
 				int id = Integer.parseInt(Nic.getText());
 				Applicant applicant = new Applicant(firstName, middleName, lastName, dadName, momName, hNo, road, 
 						cty, date, mnth, yr, placeBirth, birthNumber, mail, mobile, id, passportImg, birthImg);
+				applicant.applicantNicVerification();
 				ApplicantForm2 form = new ApplicantForm2(applicant, frame);
 				frame.switchPanel(form);
-				applicant.applicantNicVerification();
 				
 			}
 		});
@@ -358,4 +358,5 @@ public class ApplicantForm extends JPanel {
 			
 		}
 	}
+	
 }
