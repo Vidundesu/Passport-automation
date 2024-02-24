@@ -160,7 +160,31 @@ public class Admin {
 			return false;
 		}
 	}
-	
+	public String[] displayDates() {
+	    List<String> dateList = new ArrayList<>();
+	    try {
+	        String sql = "SELECT firstName, appointmentDate FROM applicant ap JOIN applicantappointment aap ON aap.userID = ap.NIC";
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // Loop through the result set and retrieve data
+	        while (rs.next()) {
+	            String firstName = rs.getString("firstName");
+	            String appointmentDate = rs.getString("appointmentDate");
+	            // Format the data into a string
+	            String dateInfo = firstName + ": " + appointmentDate;
+	            // Add the formatted data to the list
+	            dateList.add(dateInfo);
+	        }
+	        // Convert the list to an array
+	        String[] dateArray = dateList.toArray(new String[0]);
+	        return dateArray;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new String[0]; // Return an empty array if an exception occurs
+	    }
+	}
+
     public static String generatePassportNumber(int length) {
         StringBuilder sb = new StringBuilder(length);
         // First character is always a letter

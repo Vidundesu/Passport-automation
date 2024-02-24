@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -61,6 +62,8 @@ public class AdminDashboard extends JPanel {
 	
 	protected String status;
 	public AdminDashboard(AdminView frame) {
+		setBackground(new Color(53, 55, 75));
+		
 		setLayout(null);
 		 displayReports();
 		
@@ -126,10 +129,12 @@ public class AdminDashboard extends JPanel {
 		
 		apPassportImg = new JLabel();
 		apPassportImg.setBounds(579, 73, 200, 265);
+		apPassportImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		add(apPassportImg);
 		
 		apBirthImg = new JLabel();
 		apBirthImg.setBounds(789, 73, 200, 265);
+		apBirthImg.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		add(apBirthImg);
 		
 		scrollPane_1 = new JScrollPane();
@@ -220,7 +225,12 @@ public class AdminDashboard extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(admin.updateApplicantStatus(status, nic)) {
 					JOptionPane.showMessageDialog(null,"Application status is set to : "+status);
-					JOptionPane.showMessageDialog(null,"Applicant added to the passport holders list");
+					
+					if(!status.equals("Rejected")) {
+						JOptionPane.showMessageDialog(null,"Applicant added to the passport holders list");
+					}else {
+						return;
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Application status set failed, Check requirements");
 				}
@@ -258,11 +268,18 @@ public class AdminDashboard extends JPanel {
 		
 		 apRejectedCount = new JLabel(rejCount);
 		apRejectedCount.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
-		apRejectedCount.setBounds(1000, 502, 46, 24);
+		apRejectedCount.setBounds(980, 495, 46, 24);
 		add(apRejectedCount);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(1100, 69, 250, 486);
+		textArea.setBounds(1050, 110, 250, 486);
+		String[] dates = admin.displayDates();
+		StringBuilder sb = new StringBuilder();
+		for (String date : dates) {
+		    sb.append("  "+date).append("\n\n"); // Append each date with a newline
+		}
+		textArea.setText(sb.toString());
+		textArea.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
 		add(textArea);
 		
 		
@@ -287,7 +304,8 @@ public class AdminDashboard extends JPanel {
 			for(ReportGenerate report : reports) {
 				 count = String.valueOf(report.getApplicantCount());
 				 pasCount =String.valueOf( report.getPassportCount());
-				 rejCount = String.valueOf(report.getRejectedCount());			}
+				 rejCount = String.valueOf(report.getRejectedCount());			
+			}
 		}
 	}
 }
