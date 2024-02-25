@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Admin.AdminView;
+import Applicant.ApplicantView;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -47,7 +51,8 @@ public class Application extends JFrame {
 		JButton logAdmin = new JButton("Log in as an Admin");
 		logAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				AdminView adminFrame = new AdminView();
+				adminFrame.main(null);
 			}
 		});
 		logAdmin.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
@@ -55,6 +60,12 @@ public class Application extends JFrame {
 		contentPane.add(logAdmin);
 		
 		JButton logApplicant = new JButton("Log in as an Applicant");
+		logApplicant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicantView apFrame = new ApplicantView();
+				apFrame.main(null);
+			}
+		});
 		logApplicant.setFont(new Font("Poppins Medium", Font.PLAIN, 15));
 		logApplicant.setBounds(599, 376, 231, 61);
 		contentPane.add(logApplicant);

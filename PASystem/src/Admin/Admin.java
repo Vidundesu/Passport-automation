@@ -167,13 +167,11 @@ public class Admin {
 	        PreparedStatement stmt = conn.prepareStatement(sql);
 	        ResultSet rs = stmt.executeQuery();
 	        
-	        // Loop through the result set and retrieve data
 	        while (rs.next()) {
 	            String firstName = rs.getString("firstName");
 	            String appointmentDate = rs.getString("appointmentDate");
 	            // Format the data into a string
 	            String dateInfo = firstName + ": " + appointmentDate;
-	            // Add the formatted data to the list
 	            dateList.add(dateInfo);
 	        }
 	        // Convert the list to an array
@@ -181,7 +179,7 @@ public class Admin {
 	        return dateArray;
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return new String[0]; // Return an empty array if an exception occurs
+	        return new String[0]; 
 	    }
 	}
 

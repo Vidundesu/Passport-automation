@@ -32,10 +32,13 @@ public class ApplicantDashboard extends JPanel {
 	
 	public ApplicantDashboard(String username) {
 		setLayout(null);
+		setBackground(new Color(53, 55, 75));
 		this.username = username;
 		applicant = new Applicant();
 		applicant.retrieveApplicantData(username);
-		display();
+		  if(display()) {
+	        	status();
+	        }
 		
 		JButton messageBtn = new JButton("");
 		ImageIcon icon = new ImageIcon("C:\\Users\\User\\OneDrive\\Documents\\GitHub\\Passport-automation\\resources\\messenger.png");
@@ -64,12 +67,6 @@ public class ApplicantDashboard extends JPanel {
 		lblNewLabel_1.setFont(new Font("Poppins Medium", Font.PLAIN, 25));
 		lblNewLabel_1.setBounds(49, 142, 326, 85);
 		add(lblNewLabel_1);
-		
-		JLabel applicantStatus = new JLabel(status);
-	
-		applicantStatus.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
-		applicantStatus.setBounds(49, 214, 188, 30);
-		add(applicantStatus);
 		
 		JLabel lblNewLabel_2 = new JLabel("Your Appointment Date: ");
 		lblNewLabel_2.setFont(new Font("Poppins Medium", Font.PLAIN, 25));
@@ -113,8 +110,18 @@ public class ApplicantDashboard extends JPanel {
 		DateSchedule.setFont(new Font("Poppins Medium", Font.PLAIN, 11));
 		DateSchedule.setBounds(247, 494, 89, 30);
 		add(DateSchedule);
+		
+			lblNewLabel.setForeground(Color.WHITE);
+	     	applicantName.setForeground(Color.WHITE);
+	        lblNewLabel_1.setForeground(Color.WHITE);
+	        
+	        lblNewLabel_2.setForeground(Color.WHITE);
+	        apDate.setForeground(Color.WHITE);
+	        lblNewLabel_3.setForeground(Color.WHITE);
+	        DateSchedule.setForeground(Color.WHITE);
+	      
 	}
-	public void display() {
+	public boolean display() {
 		List<Applicant> applicants = applicant.retrieveApplicantData(username);
 		if(!applicants.isEmpty()) {
 			for(Applicant applicant : applicants) {
@@ -124,21 +131,22 @@ public class ApplicantDashboard extends JPanel {
 				date = appointmentDate.toString();
 			}
 		}
+		return true;
 	}
 	public void status() {
-		 if (status != null) {
-		        JLabel applicantStatus = new JLabel(status);
-		        if (status.equals("rejected")) {
-		            applicantStatus.setForeground(new Color(153, 0, 0));
-		        } else if (status.equals("pass")) {
-		            applicantStatus.setForeground(new Color(0, 204, 0));
-		        } else if (status.equals("Processing")) {
-		            applicantStatus.setForeground(new Color(0, 0, 51));
-		        }
-		        applicantStatus.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
-		        applicantStatus.setBounds(49, 214, 188, 30);
-		        add(applicantStatus);
-		    }
+		
+		JLabel applicantStatus = new JLabel(status);
+		if (status.equals("Rejected")) {
+			applicantStatus.setForeground(new Color(153, 0, 0));
+		} else if (status.equals("Passed")) {
+		    applicantStatus.setForeground(new Color(0, 204, 0));
+		} else if (status.equals("Processing")) {
+		 applicantStatus.setForeground(Color.WHITE);
+		}
+		applicantStatus.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		applicantStatus.setBounds(49, 214, 188, 30);
+		add(applicantStatus);
+		  
 	}
    
 }

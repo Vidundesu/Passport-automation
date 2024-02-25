@@ -12,8 +12,8 @@ import Admin.Admin;
 public class Main {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		Admin admin = new Admin ();
-		admin.reportGeneration();
+		Application applicationMain = new Application();
+		applicationMain.main(null);
 	}
 
 }

@@ -139,9 +139,10 @@ public class AdminDashboard extends JPanel {
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 395, 519, 172);
+
 		add(scrollPane_1);
-		
 		apStatusTable = new JTable();
+		
 		scrollPane_1.setViewportView(apStatusTable);
 		apStatusTable.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -177,12 +178,16 @@ public class AdminDashboard extends JPanel {
 			}
 		});
 		rejectBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
+		rejectBtn.setForeground(Color.WHITE);
+		rejectBtn.setBackground(new Color(53, 55, 75));
 		rejectBtn.setBounds(579, 469, 109, 23);
 		add(rejectBtn);
 		
 		passBtn = new JRadioButton("Passed");
 		passBtn.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
 		passBtn.setBounds(579, 503, 109, 23);
+		passBtn.setForeground(Color.WHITE);
+		passBtn.setBackground(new Color(53, 55, 75));
 		passBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JRadioButton radioButton = (JRadioButton) e.getSource();
@@ -216,6 +221,7 @@ public class AdminDashboard extends JPanel {
 		add(lblNewLabel_3);
 		
 		JLabel apCount = new JLabel(count);
+		apCount.setForeground(Color.WHITE);
 		apCount.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
 		apCount.setBounds(904, 400, 46, 24);
 		add(apCount);
@@ -257,6 +263,7 @@ public class AdminDashboard extends JPanel {
 		add(psporlbl);
 		
 		 apPassportCount = new JLabel(pasCount);
+		 apPassportCount.setForeground(Color.WHITE);
 		apPassportCount.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
 		apPassportCount.setBounds(904, 458, 46, 14);
 		add(apPassportCount);
@@ -267,6 +274,7 @@ public class AdminDashboard extends JPanel {
 		add(lblNewLabel_5);
 		
 		 apRejectedCount = new JLabel(rejCount);
+		 apRejectedCount.setForeground(Color.WHITE);
 		apRejectedCount.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
 		apRejectedCount.setBounds(980, 495, 46, 24);
 		add(apRejectedCount);
@@ -276,12 +284,26 @@ public class AdminDashboard extends JPanel {
 		String[] dates = admin.displayDates();
 		StringBuilder sb = new StringBuilder();
 		for (String date : dates) {
-		    sb.append("  "+date).append("\n\n"); // Append each date with a newline
+		    sb.append(date).append("\n\n"); // Append each date with a newline
 		}
 		textArea.setText(sb.toString());
+		textArea.setBackground(new Color(53, 55, 75));
+		textArea.setForeground(new Color(246, 245, 245));
 		textArea.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
-		add(textArea);
+		add(textArea); 
 		
+		// Change the color of labels and buttons
+		lblNewLabel.setForeground(Color.WHITE);
+		refreshBtn.setForeground(Color.WHITE);
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_3.setForeground(Color.WHITE);
+		psporlbl.setForeground(Color.WHITE);
+		lblNewLabel_5.setForeground(Color.WHITE);
+		lblNewLabel_4.setForeground(Color.WHITE);
+		// Change the color of JTextArea
+		textArea.setForeground(Color.WHITE);
+
 		
 		
 	}
